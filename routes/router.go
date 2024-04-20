@@ -10,8 +10,6 @@ import (
 
 func createMyRender() multitemplate.Renderer {
 	p := multitemplate.NewRenderer()
-	p.AddFromFiles("admin", "web/admin/dist/index.html")
-	p.AddFromFiles("front", "web/front/dist/index.html")
 	return p
 }
 
