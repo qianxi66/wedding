@@ -32,7 +32,6 @@ func init() {
 	}
 	LoadServer(file)
 	LoadData(file)
-	LoadQiniu(file)
 }
 
 func LoadServer(file *ini.File) {
@@ -49,10 +48,3 @@ func LoadData(file *ini.File) {
 	DbName = file.Section("database").Key("DbName").MustString("github.com/changwei4869/wedding")
 }
 
-func LoadQiniu(file *ini.File) {
-	Zone = file.Section("qiniu").Key("Zone").MustInt(1)
-	AccessKey = file.Section("qiniu").Key("AccessKey").String()
-	SecretKey = file.Section("qiniu").Key("SecretKey").String()
-	Bucket = file.Section("qiniu").Key("Bucket").String()
-	QiniuSever = file.Section("qiniu").Key("QiniuSever").String()
-}
