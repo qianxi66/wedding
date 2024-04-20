@@ -43,8 +43,8 @@ func LoadServer(file *ini.File) {
 func LoadData(file *ini.File) {
 	DbHost = file.Section("database").Key("DbHost").MustString("localhost")
 	DbPort = file.Section("database").Key("DbPort").MustString("3306")
-	DbUser = file.Section("database").Key("DbUser").MustString("github.com/changwei4869/wedding")
+	DbUser = file.Section("database").Key("DbUser").MustString("root")
 	DbPassWord = file.Section("database").Key("DbPassWord").String()
-	DbName = file.Section("database").Key("DbName").MustString("github.com/changwei4869/wedding")
+	DbName = file.Section("database").Key("DbName").MustString("wedding")
 }
 
