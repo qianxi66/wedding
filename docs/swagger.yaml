@@ -5,6 +5,21 @@ definitions:
       status:
         type: string
     type: object
+  model.TagsResp:
+    properties:
+      created_at:
+        type: string
+      deleted_at:
+        type: string
+      gender:
+        type: string
+      id:
+        type: integer
+      name:
+        type: string
+      updated_at:
+        type: string
+    type: object
 host: localhost:8088
 info:
   contact:
@@ -34,4 +49,23 @@ paths:
       summary: 健康检查
       tags:
       - health
+  /tag/:id:
+    get:
+      description: 根据id获取tag
+      parameters:
+      - description: id
+        in: path
+        name: id
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: 成功获取tag
+          schema:
+            $ref: '#/definitions/model.TagsResp'
+      summary: 根据id获取tag
+      tags:
+      - GetTagById
 swagger: "2.0"

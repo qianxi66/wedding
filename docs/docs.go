@@ -46,6 +46,35 @@ const docTemplate = `{
                     }
                 }
             }
+        },
+        "/tag/:id": {
+            "get": {
+                "description": "根据id获取tag",
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "GetTagById"
+                ],
+                "summary": "根据id获取tag",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "id",
+                        "name": "id",
+                        "in": "path",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "成功获取tag",
+                        "schema": {
+                            "$ref": "#/definitions/model.TagsResp"
+                        }
+                    }
+                }
+            }
         }
     },
     "definitions": {
@@ -53,6 +82,29 @@ const docTemplate = `{
             "type": "object",
             "properties": {
                 "status": {
+                    "type": "string"
+                }
+            }
+        },
+        "model.TagsResp": {
+            "type": "object",
+            "properties": {
+                "created_at": {
+                    "type": "string"
+                },
+                "deleted_at": {
+                    "type": "string"
+                },
+                "gender": {
+                    "type": "string"
+                },
+                "id": {
+                    "type": "integer"
+                },
+                "name": {
+                    "type": "string"
+                },
+                "updated_at": {
                     "type": "string"
                 }
             }
