@@ -1,8 +1,8 @@
 package main
 
 import (
-	"github.com/changwei4869/wedding/model"
-	"github.com/changwei4869/wedding/routes"
+	"github.com/changwei4869/wedding/modules"
+	"github.com/changwei4869/wedding/modules/db"
 )
 
 // @title           Swagger Example API
@@ -22,8 +22,8 @@ import (
 // SwaggerUI: http://localhost:8088/swagger/index.html
 func main() {
 	// 引用数据库
-	model.InitDb()
+	db.InitDb()
 	// 引入路由组件
-	routes.InitRouter()
+	modules.InitRouter()
 
 }

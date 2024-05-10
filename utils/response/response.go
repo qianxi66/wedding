@@ -37,34 +37,49 @@ func ErrRecordNotFound(err error, msg string) error {
 }
 
 func CopyStruct(dst, src interface{}) error {
-	// Ensure that src and dst are pointers
 	srcVal := reflect.ValueOf(src)
 	dstVal := reflect.ValueOf(dst)
-	if srcVal.Kind() != reflect.Ptr || dstVal.Kind() != reflect.Ptr {
-		return fmt.Errorf("both source and destination must be pointers to structs")
+
+	if dstVal.Kind() != reflect.Ptr {
+		return fmt.Errorf("destination must be a pointer to a struct")
+	}
+	dstElem := dstVal.Elem()
+
+	if dstElem.Kind() != reflect.Struct {
+		return fmt.Errorf("destination must be a struct")
 	}
 
-	// Dereference pointers to get the actual struct objects
-	srcVal = srcVal.Elem()
-	dstVal = dstVal.Elem()
-
-	// Check that we're dealing with structs
-	if srcVal.Kind() != reflect.Struct || dstVal.Kind() != reflect.Struct {
-		return fmt.Errorf("both source and destination must be structs")
+	// Handle both struct and pointer to struct for src
+	if srcVal.Kind() == reflect.Ptr {
+		srcVal = srcVal.Elem()
+	}
+	if srcVal.Kind() != reflect.Struct {
+		return fmt.Errorf("source must be a struct or a pointer to a struct")
 	}
 
-	// Copy data from src to dst
+	srcType := srcVal.Type()
 	for i := 0; i < srcVal.NumField(); i++ {
 		srcField := srcVal.Field(i)
-		dstField := dstVal.FieldByName(srcVal.Type().Field(i).Name)
-
-		if dstField.IsValid() && dstField.CanSet() {
-			// Check if the destination field can accept the source field type
-			if dstField.Type() == srcField.Type() {
-				dstField.Set(srcField)
-			}
+		srcFieldType := srcType.Field(i)
+		if srcFieldType.PkgPath != "" { // Field is unexportable
+			continue
 		}
-	}
 
+		dstField := dstElem.FieldByName(srcFieldType.Name)
+		if !dstField.IsValid() {
+			fmt.Printf("No such field: %s in destination\n", srcFieldType.Name)
+			continue
+		}
+		if !dstField.CanSet() {
+			fmt.Printf("Cannot set field: %s in destination\n", srcFieldType.Name)
+			continue
+		}
+		if dstField.Type() != srcField.Type() {
+			fmt.Printf("Type mismatch %s: %s != %s\n", srcFieldType.Name, dstField.Type(), srcField.Type())
+			continue
+		}
+
+		dstField.Set(srcField)
+	}
 	return nil
 }

@@ -1,4 +1,4 @@
-package model
+package db
 
 import (
 	"fmt"
@@ -15,6 +15,10 @@ import (
 
 var db *gorm.DB
 var err error
+
+func GetDb() *gorm.DB {
+	return db
+}
 
 func InitDb() {
 
