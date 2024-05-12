@@ -17,11 +17,10 @@ var (
 	DbPassWord string
 	DbName     string
 
-	Zone       int
-	AccessKey  string
-	SecretKey  string
-	Bucket     string
-	QiniuSever string
+	Endpoint        string
+	AccessKeyID     string
+	SecretAccessKey string
+	UseSSL          bool
 )
 
 // 初始化
@@ -32,6 +31,7 @@ func init() {
 	}
 	LoadServer(file)
 	LoadData(file)
+	LoadMinio(file)
 }
 
 func LoadServer(file *ini.File) {
@@ -48,3 +48,9 @@ func LoadData(file *ini.File) {
 	DbName = file.Section("database").Key("DbName").MustString("wedding")
 }
 
+func LoadMinio(file *ini.File) {
+	Endpoint = file.Section("minio").Key("Endpoint").MustString("localhost:9000")
+	AccessKeyID = file.Section("minio").Key("AccessKeyID").MustString("admin")
+	SecretAccessKey = file.Section("minio").Key("SecretAccessKey").MustString("12345678")
+	UseSSL = file.Section("minio").Key("UseSSL").MustBool(false)
+}
