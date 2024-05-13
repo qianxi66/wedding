@@ -27,6 +27,8 @@ type TagsDetailReq struct {
 
 // TagsAddReq tags新增参数
 type TagsAddReq struct {
+	Name   string `gorm:"comment:''" json:"name"`   //
+	Gender string `gorm:"comment:''" json:"gender"` //
 }
 
 // TagsEditReq tags新增参数
