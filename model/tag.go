@@ -1,14 +1,17 @@
 package model
 
-import "time"
+import (
+	"gorm.io/gorm"
+	"time"
+)
 
 type Tags struct {
-	Id        int       `gorm:"primarykey;comment:''" json:"id"` //
-	Name      string    `gorm:"comment:''" json:"name"`          //
-	Gender    string    `gorm:"comment:''" json:"gender"`        //
-	CreatedAt time.Time `gorm:"comment:''" json:"created_at"`    //
-	UpdatedAt time.Time `gorm:"comment:''" json:"updated_at"`    //
-	DeletedAt time.Time `gorm:"comment:''" json:"deleted_at"`    //
+	Id        int            `gorm:"primarykey;comment:''" json:"id"` //
+	Name      string         `gorm:"comment:''" json:"name"`          //
+	Gender    string         `gorm:"comment:''" json:"gender"`        //
+	CreatedAt time.Time      `gorm:"comment:''" json:"created_at"`    //
+	UpdatedAt time.Time      `gorm:"comment:''" json:"updated_at"`    //
+	DeletedAt gorm.DeletedAt `gorm:"comment:''" json:"deleted_at"`    //
 }
 
 // TagsListReq tags列表参数
@@ -52,10 +55,10 @@ type TagsDelBatchReq struct {
 
 // TagsResp tags返回信息
 type TagsResp struct {
-	Id        int       `json:"id" structs:"Id"`                //
-	Name      string    `json:"name" structs:"Name"`            //
-	Gender    string    `json:"gender" structs:"Gender"`        //
-	CreatedAt time.Time `json:"created_at" structs:"CreatedAt"` //
-	UpdatedAt time.Time `json:"updated_at" structs:"UpdatedAt"` //
-	DeletedAt time.Time `json:"deleted_at" structs:"DeletedAt"` //
+	Id        int            `json:"id" structs:"Id"`                //
+	Name      string         `json:"name" structs:"Name"`            //
+	Gender    string         `json:"gender" structs:"Gender"`        //
+	CreatedAt time.Time      `json:"created_at" structs:"CreatedAt"` //
+	UpdatedAt time.Time      `json:"updated_at" structs:"UpdatedAt"` //
+	DeletedAt gorm.DeletedAt `json:"deleted_at" structs:"DeletedAt"` //
 }

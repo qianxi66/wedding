@@ -69,6 +69,7 @@ func (this rolesService) List(page response.PageReq, listReq model.RolesListReq)
 	// 分页信息
 	limit := page.PageSize
 	offset := page.PageSize * (page.PageNo - 1)
+
 	// 查询
 	query := this.db.Model(&model.Roles{})
 	if listReq.Id > 0 {
@@ -86,20 +87,32 @@ func (this rolesService) List(page response.PageReq, listReq model.RolesListReq)
 	if len(listReq.UpdatedAt) > 0 {
 		query = query.Where("updated_at = ?", listReq.UpdatedAt)
 	}
+
 	// 总数
 	var count int64
 	err := query.Count(&count).Error
-	if e = response.CheckErr(err, "roles rolesService  List Count err"); e != nil {
+	if e = response.CheckErr(err, "roles rolesService List Count err"); e != nil {
 		return
 	}
+
 	// 数据
 	var rows []model.Roles
 	err = query.Limit(limit).Offset(offset).Order("id desc").Find(&rows).Error
-	if e = response.CheckErr(err, "roles rolesService  List Find err"); e != nil {
+	if e = response.CheckErr(err, "roles rolesService List Find err"); e != nil {
 		return
 	}
-	resps := []model.RolesResp{}
-	response.CopyStruct(&resps, rows)
+
+	resps := make([]model.RolesResp, len(rows))
+	for i, role := range rows {
+		resps[i] = model.RolesResp{
+			Id:          role.Id,
+			Name:        role.Name,
+			Description: role.Description,
+			CreatedAt:   role.CreatedAt,
+			UpdatedAt:   role.UpdatedAt,
+		}
+	}
+
 	return response.PageResp{
 		PageNo:   page.PageNo,
 		PageSize: page.PageSize,

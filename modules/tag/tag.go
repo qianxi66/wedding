@@ -39,8 +39,16 @@ func GetTagById(c *gin.Context) {
 	c.JSON(http.StatusOK, tag)
 }
 
+// AddTag 添加新tag
+// @summary 添加新tag
+// @description 添加新tag
+// @tags AddTag
+// @accept application/json
+// @produce application/json
+// @param tag body model.TagsAddReq true "Tag 信息"
+// @success 201 {object} model.TagsAddReq "成功添加tag"
+// @router /tag [post]
 func AddTag(c *gin.Context) {
-
 	tag := model.TagsAddReq{}
 	// 从请求中解析 JSON 数据到 tag 结构体
 	if err := c.BindJSON(&tag); err != nil {
@@ -56,6 +64,14 @@ func AddTag(c *gin.Context) {
 	c.JSON(http.StatusCreated, tag) // 返回新创建的标签信息
 }
 
+// DeleteTag 删除指定id的tag
+// @summary 删除指定id的tag
+// @description 删除指定id的tag
+// @tags DeleteTag
+// @param id path string true "id"
+// @produce text/plain
+// @success 200 {string} string "成功删除tag"
+// @router /tag/:id [delete]
 func DeleteTag(c *gin.Context) {
 	id := c.Param("id")
 	if id == "" {
@@ -77,8 +93,16 @@ func DeleteTag(c *gin.Context) {
 	c.String(http.StatusOK, "tag deleted successfully")
 }
 
+// EditTag 编辑tag
+// @summary 编辑tag
+// @description 编辑tag
+// @tags EditTag
+// @accept application/json
+// @produce application/json
+// @param tag body model.TagsEditReq true "Tag 信息"
+// @success 200 {object} model.TagsEditReq "成功编辑tag"
+// @router /tag [put]
 func EditTag(c *gin.Context) {
-
 	// 获取更新后的tag
 	var updatedTag model.TagsEditReq
 	if err := c.BindJSON(&updatedTag); err != nil {
