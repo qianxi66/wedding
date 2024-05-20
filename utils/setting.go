@@ -41,11 +41,11 @@ func LoadServer(file *ini.File) {
 }
 
 func LoadData(file *ini.File) {
-	DbHost = file.Section("database").Key("DbHost").MustString("127.0.0.1")
+	DbHost = file.Section("database").Key("DbHost").MustString("localhost")
 	DbPort = file.Section("database").Key("DbPort").MustString("3306")
 	DbUser = file.Section("database").Key("DbUser").MustString("root")
-	DbPassWord = file.Section("database").Key("DbPassWord").MustString("aoligei123")
-	DbName = file.Section("database").Key("DbName").MustString("db")
+	DbPassWord = file.Section("database").Key("DbPassWord").MustString("demo")
+	DbName = file.Section("database").Key("DbName").MustString("wedding")
 }
 
 func LoadMinio(file *ini.File) {
